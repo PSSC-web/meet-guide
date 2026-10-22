@@ -306,10 +306,10 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
      sub:"Some swimmers don't show up. That heat still swims with their lane empty, so don't go just because the swimmer in front of you went. Check the heat number, and ask the timer if you're not sure.",
      note:"If you do swim in the wrong heat, tell your coach right away.",
      art:function(){return '<div class="chat"><div class="left"><div class="who">Swimmer</div><div class="bub">I\'m heat 3. Is this heat 3?</div></div><div class="right"><div class="who">Timer</div><div class="bub">This is heat 2. You\'re next!</div></div></div>'}},
-    {title:"Lots of short whistles: get beside your block.",
-     sub:"You'll hear a burst of at least 4 short, quick blasts. Move from behind the block to the side of it. Don't step up yet.",
+    {title:"Lots of short whistles: get ready.",
+     sub:"You'll hear a burst of at least 4 short, quick blasts. Get ready at your block: take off everything except your swimwear, cap and goggles. Stay behind the block. Don't step up yet.",
      sound:{key:"short",label:"Hear the short whistles"}, wave:"sssss",
-     art:function(){return scene(ARROW+dot(70,110,"",{op:.35})+arrow("M84 104 C110 92 140 80 156 72")+dot(170,70,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">BESIDE THE BLOCK</text>')}},
+     art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text><text x="70" y="146" text-anchor="middle" font-size="14" fill="#13294B">BEHIND THE BLOCK</text>')}},
     {title:"Long whistle: get on the block.",
      sub:"Step up on your block and get ready. Stay still and quiet.",
      sound:{key:"long",label:"Hear the long whistle"}, wave:"l",
@@ -335,7 +335,7 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
   var STEPS_BACK=[STEPS_FREE[0],STEPS_FREE[1],STEPS_FREE[2],
     {title:"Rapid short whistles: get ready.",
-     sub:"You'll hear 4 or more rapid short whistles. Get ready at your lane with your cap and goggles on. Don't get in the water yet.",
+     sub:"You'll hear 4 or more rapid short whistles. Get ready at your lane: take off everything except your swimwear, cap and goggles. Don't get in the water yet.",
      sound:{key:"short",label:"Hear the rapid short whistles"}, wave:"sssss",
      art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text>')}},
     {title:"First long whistle: get in the water.",
@@ -367,7 +367,7 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     {key:"short",ans:"beside",txt:"a burst of short whistles"},
     {key:"long",ans:"onblock",txt:"a long whistle"}
   ];
-  var OPTS=[{id:"beside",t:"Get beside my block"},{id:"onblock",t:"Get on the block"},{id:"go",t:"Go!"}];
+  var OPTS=[{id:"beside",t:"Get ready behind my block"},{id:"onblock",t:"Get on the block"},{id:"go",t:"Go!"}];
 
   var idx=0, seen={}, qi=0, score=0;
   var stage=document.getElementById("stage"), count=document.getElementById("count"), dots=document.getElementById("dots");
