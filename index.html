@@ -381,7 +381,8 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     {title:"Finish: stay by the lane line.",
      sub:"When you finish, stay in the water. Move to the side, by the lane line, away from the wall. Listen for the long whistle. That means get out. It is the same first long whistle that tells the next heat to get in.",
      sound:{key:"long",label:"Hear the long whistle"}, wave:"l",
-     art:function(){return scene(dot(204,110,"NEXT",{fill:"#9FB3D3"})+dot(236,152,"YOU")+'<text x="290" y="100" text-anchor="middle" font-size="14" fill="#fff">STAY BY THE</text><text x="290" y="118" text-anchor="middle" font-size="14" fill="#fff">LANE LINE</text><text x="290" y="30" text-anchor="middle" font-size="15" fill="#fff">STAY IN THE WATER</text><text x="290" y="184" text-anchor="middle" font-size="13" fill="#fff">NEXT HEAT GETS IN</text><text x="290" y="200" text-anchor="middle" font-size="13" fill="#fff">THE WATER</text>')}},
+     fly:true,
+     art:function(){return '<div id="fly"></div>'}},
     {title:"Put it in order.",
      sub:"The backstroke start, in order:",
      recap:["Rapid short whistles: get ready","First long whistle: get in the water","Second long whistle: feet up","“Take your mark”","Light and horn: go!"],
@@ -421,6 +422,21 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
   function flyHTML(state){
     var s1=state===1;
+    if(STEPS===STEPS_BACK){
+      var ex=ARROW;
+      if(s1){
+        ex+=dot(126,110,"NEXT",{fill:"#9FB3D3"})+dot(236,152,"YOU")+
+          '<text x="290" y="30" text-anchor="middle" font-size="15" fill="#fff">STAY IN THE WATER</text>'+
+          '<text x="290" y="100" text-anchor="middle" font-size="14" fill="#fff">STAY BY THE</text><text x="290" y="118" text-anchor="middle" font-size="14" fill="#fff">LANE LINE</text>'+
+          '<text x="290" y="190" text-anchor="middle" font-size="13" fill="#fff">NEXT HEAT WAITS</text>';
+      }else{
+        ex+=dot(126,110,"",{op:.35})+arrow("M130 98 C140 66 176 62 204 84","#fff")+dot(226,100,"NEXT",{fill:"#9FB3D3"})+
+          dot(236,152,"",{op:.35})+arrow("M222 154 L196 160")+dot(176,172,"YOU")+
+          '<text x="290" y="30" text-anchor="middle" font-size="15" fill="#fff">LONG WHISTLE!</text>'+
+          '<text x="292" y="176" text-anchor="middle" font-size="13" fill="#fff">YOU GET OUT</text><text x="292" y="194" text-anchor="middle" font-size="13" fill="#fff">NEXT HEAT GETS IN</text>';
+      }
+      return scene(ex)+'<div class="seg" role="group" aria-label="Finish steps"><button type="button" data-st="1" aria-pressed="'+(s1?"true":"false")+'">1. Stay by the lane line</button><button type="button" data-st="2" aria-pressed="'+(!s1?"true":"false")+'">2. Long whistle: get out</button></div>';
+    }
     var extra=ARROW;
     if(s1){
       extra+=dot(170,110,"NEXT",{fill:"#9FB3D3"})+dot(224,134,"YOU")+
