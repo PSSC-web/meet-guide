@@ -242,15 +242,11 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
         <p>This is how most meets run. Each pool and meet host can have its own rules, so follow the posted signs, the meet information and the officials.</p>
       </div>
       <div class="armbox" id="armbox">
-        <h3>Mark your swimmer's arm</h3>
-        <p>Swimmers write their event, heat, lane and stroke on their arm so they always know where to be. Our head coach is great about doing this for the youngest swimmers. If you fill this out first, it saves the coach time. Get the numbers from the heat sheet, then copy them onto your swimmer's arm.</p>
-        <div class="armgrid" id="armrows" role="group" aria-label="Events for the arm">
-          <div class="armh"><span>Event</span><span>Heat</span><span>Lane</span><span>Stroke</span></div>
-        </div>
-        <button type="button" class="armadd" id="armadd">+ Add another event</button>
+        <h3>Draw the arm grid</h3>
+        <p>Swimmers have their event, heat, lane and stroke written on their arm so they always know where to be. Our head coach fills in each race herself, because she gets the changes as they happen. To save her time, draw the grid and the four letters across the top, like the picture. Leave the rows empty.</p>
         <div class="armart" id="armart" aria-live="polite"></div>
         <p class="armkey"><b>E</b> Event &nbsp; <b>H</b> Heat &nbsp; <b>L</b> Lane &nbsp; <b>S</b> Stroke<br><b>FR</b> Freestyle &nbsp; <b>BK</b> Backstroke &nbsp; <b>FL</b> Butterfly &nbsp; <b>BR</b> Breaststroke</p>
-        <p class="armnote">Use first names only. Heat and lane can change, so check the heat sheet again before the race.</p>
+        <p class="armnote">Heat and lane can change, so the coach writes them in right before the race.</p>
       </div>
       <div class="pitem cheer"><span class="badge yes">Do</span><div><h3>Be loud and positive!</h3><p>Cheer for every PSSC swimmer, fast or slow, first or last. Clap for effort, personal bests and teammates. We are one team, swimmers, coaches and parents.</p></div></div>
       <div class="pitem"><span class="badge yes">Do</span><div><h3>Be on time</h3><p>Get your swimmer there on time for warm-up. Check the meet information for warm-up and start times.</p></div></div>
@@ -538,48 +534,16 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     paint();
   })();
     (function(){
-    var rowsEl=document.getElementById("armrows"),art=document.getElementById("armart"),add=document.getElementById("armadd");
-    var MAX=5,n=0,X=[104,172,241,309];
-    var LAB=["Event","Heat","Lane","Stroke"];
-    function row(){
-      var r=document.createElement("div");r.className="armr";
-      LAB.forEach(function(l){
-        var i;
-        if(l==="Stroke"){
-          i=document.createElement("select");
-          ["","FR","BK","FL","BR"].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o||"-";i.appendChild(op)});
-          i.addEventListener("change",draw);
-        }else{
-          i=document.createElement("input");i.type="text";i.inputMode="numeric";i.maxLength=3;
-          i.addEventListener("input",function(){i.value=i.value.replace(/[^0-9a-zA-Z]/g,"");draw()});
-        }
-        i.setAttribute("aria-label",l+" "+(n+1));r.appendChild(i);
-      });
-      rowsEl.appendChild(r);n++;
-      if(n>=MAX)add.hidden=true;
-    }
-    function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
-    function draw(){
-      var rows=rowsEl.querySelectorAll(".armr"),vals=[];
-      rows.forEach(function(r){var v=[].map.call(r.querySelectorAll("input,select"),function(i){return i.value});if(v.join("")!=="")vals.push(v)});
-      var ex=!vals.length; if(ex)vals=[["12","3","4","FR"]];
-      var h='<svg viewBox="0 0 360 252" role="img" aria-label="Forearm with a grid. Columns are E for event, H for heat, L for lane, S for stroke. One race per row.">'+
-        '<rect x="6" y="6" width="348" height="240" rx="26" fill="#F6DCC8" stroke="#13294B" stroke-width="3"/>'+
-        '<g stroke="#13294B" stroke-width="2.5" fill="none" stroke-linecap="round">'+
-        '<rect x="36" y="20" width="288" height="212" rx="4"/>';
-      [1,2,3].forEach(function(k){var x=36+k*72;h+='<line x1="'+x+'" y1="20" x2="'+x+'" y2="232"/>'});
-      for(var k=1;k<=5;k++){var y=20+(k===1?32:32+(k-1)*36);h+='<line x1="36" y1="'+y+'" x2="324" y2="'+y+'"/>'}
-      h+='</g><g font-family="Barlow Condensed,Arial Narrow,Arial,sans-serif" font-weight="800" fill="#13294B" text-anchor="middle">';
-      ["E","H","L","S"].forEach(function(l,j){h+='<text x="'+(72+j*72)+'" y="45" font-size="26" font-style="italic">'+l+'</text>'});
-      vals.forEach(function(v,i){
-        var y=80+i*36;
-        [0,1,2,3].forEach(function(j){h+='<text x="'+(72+j*72)+'" y="'+y+'" font-size="26" '+(ex?'opacity=".35"':'')+'>'+esc(v[j]||"")+'</text>'});
-      });
-      h+='</g></svg>'+(ex?'<p class="armex">Example. Fill in yours above.</p>':'');
-      art.innerHTML=h;
-    }
-    add.addEventListener("click",function(){row();draw()});
-    row();draw();
+    var art=document.getElementById("armart");
+    var h='<svg viewBox="0 0 360 252" role="img" aria-label="Forearm with an empty grid. Columns are labeled E for event, H for heat, L for lane and S for stroke. The rows are empty for the coach to fill in.">'+
+      '<rect x="6" y="6" width="348" height="240" rx="26" fill="#F6DCC8" stroke="#13294B" stroke-width="3"/>'+
+      '<g stroke="#13294B" stroke-width="2.5" fill="none" stroke-linecap="round"><rect x="36" y="20" width="288" height="212" rx="4"/>';
+    [1,2,3].forEach(function(k){var x=36+k*72;h+='<line x1="'+x+'" y1="20" x2="'+x+'" y2="232"/>'});
+    for(var k=1;k<=5;k++){var y=52+(k-1)*36;h+='<line x1="36" y1="'+y+'" x2="324" y2="'+y+'"/>'}
+    h+='</g><g font-family="Barlow Condensed,Arial Narrow,Arial,sans-serif" font-weight="800" fill="#13294B" text-anchor="middle">';
+    ["E","H","L","S"].forEach(function(l,j){h+='<text x="'+(72+j*72)+'" y="45" font-size="26" font-style="italic">'+l+'</text>'});
+    h+='</g></svg>';
+    art.innerHTML=h;
   })();
   var TABS=[["sw","tab-sw","panel-sw"],["pk","tab-pk","panel-pk"],["ti","tab-ti","panel-ti"],["pa","tab-pa","panel-pa"]];
   function tab(which){
