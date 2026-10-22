@@ -113,6 +113,36 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .soon h2{font-family:var(--display);font-weight:800;font-size:32px;margin:0 0 8px;color:var(--navy)}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){.flash,.wave.on i{animation:none}}
+
+/* parents tab */
+.plist{display:flex;flex-direction:column;gap:12px;padding-block:14px 28px}
+.pintro{background:var(--tint);color:var(--ink);border-radius:16px;padding:16px 18px;border-left:6px solid var(--green)}
+.pintro h2{font-family:var(--display);font-weight:800;font-size:clamp(28px,8.4vw,36px);line-height:1.02;margin:0 0 6px;color:var(--navy)}
+.pintro p{margin:0;font-size:16px}
+.pitem{background:var(--card);color:var(--ink);border-radius:16px;padding:16px 18px;box-shadow:0 8px 24px rgba(0,0,0,.28);display:flex;gap:14px;align-items:flex-start}
+.badge{flex:none;min-width:76px;text-align:center;font:800 19px/1 var(--display);letter-spacing:.08em;text-transform:uppercase;border-radius:8px;padding:9px 6px;color:#fff}
+.badge.no{background:var(--warn)}
+.badge.role{background:var(--navy)}
+.badge.yes{background:var(--btn-dark)}
+.pitem.cheer{border-left:8px solid var(--green)}
+.psrc{margin:4px 2px 0;font-size:13px;opacity:.8}
+.pitem h3{font-family:var(--display);font-weight:800;font-size:clamp(24px,7vw,30px);line-height:1.05;margin:0 0 4px;color:var(--navy)}
+.pitem p{margin:0;font-size:16px}
+.stroke{margin:4px 0 12px}
+.seg.stroke button{background:transparent!important;color:#fff!important;border:2px solid rgba(255,255,255,.35)!important}
+.seg.stroke button[aria-pressed="true"]{background:var(--green)!important;color:var(--navy)!important;border-color:var(--green)!important}
+.recap{margin:10px 0 0;padding-left:26px;font-size:18px;line-height:1.5;color:var(--ink);font-weight:600}
+.recap li{margin:4px 0}
+.chk{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--card);color:var(--ink);border:0;border-radius:16px;padding:16px 18px;box-shadow:0 8px 24px rgba(0,0,0,.28);font:inherit;cursor:pointer;min-height:64px}
+.chk strong{display:block;font-family:var(--display);font-weight:800;font-size:clamp(24px,7vw,30px);line-height:1.05;color:var(--navy)}
+.chk small{display:block;margin-top:4px;font-size:16px}
+.chk .box{flex:none;width:34px;height:34px;border-radius:8px;border:3px solid var(--navy);background:#fff;position:relative;margin-top:2px}
+.chk[aria-checked="true"] .box{background:var(--btn);border-color:var(--btn)}
+.chk[aria-checked="true"] .box:after{content:"";position:absolute;left:10px;top:3px;width:9px;height:18px;border:solid #fff;border-width:0 4px 4px 0;transform:rotate(45deg)}
+.chk[aria-checked="true"] strong{text-decoration:line-through;text-decoration-thickness:3px;opacity:.6}
+.chk:focus-visible,.chkreset:focus-visible{outline:3px solid var(--green);outline-offset:2px}
+.chkdone{margin:0;text-align:center;color:#fff;font-weight:700;min-height:1.2em}
+.chkreset{align-self:center;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35);border-radius:10px;padding:12px 18px;font:700 16px var(--body,inherit);cursor:pointer;min-height:48px}
 </style>
 </head>
 <body>
@@ -133,10 +163,13 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 <main class="wrap">
   <div class="tabs" role="tablist" aria-label="Guide for">
     <button class="tab" role="tab" id="tab-sw" aria-selected="true" aria-controls="panel-sw">Swimmers</button>
+    <button class="tab" role="tab" id="tab-pk" aria-selected="false" aria-controls="panel-pk">Bring</button>
     <button class="tab" role="tab" id="tab-ti" aria-selected="false" aria-controls="panel-ti">Timers</button>
+    <button class="tab" role="tab" id="tab-pa" aria-selected="false" aria-controls="panel-pa">Parents</button>
   </div>
 
   <section id="panel-sw" role="tabpanel" aria-labelledby="tab-sw">
+    <div class="seg stroke" id="stroke" role="group" aria-label="Choose a start"><button type="button" data-stroke="free" aria-pressed="true">Off the block</button><button type="button" data-stroke="back" aria-pressed="false">Backstroke</button></div>
     <div class="progress">
       <div class="count" id="count">Step 1 of 9</div>
       <div class="dots" id="dots" aria-label="Jump to a step"></div>
@@ -148,10 +181,63 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     </div>
   </section>
 
+  <section id="panel-pk" role="tabpanel" aria-labelledby="tab-pk" hidden>
+    <div class="plist">
+      <div class="pintro">
+        <h2>What to bring to a meet</h2>
+        <p>Meets can last many hours. Swimmers get wet, then may wait a long time before their next event. Tap each item as you pack it.</p>
+      </div>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="towels"><span class="box" aria-hidden="true"></span><span><strong>Extra towels</strong><small>Bring more than one so your swimmer can dry off again and again between events.</small></span></button>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="robe"><span class="box" aria-hidden="true"></span><span><strong>A towel robe (nice to have)</strong><small>Recommended, but not required. It helps keep your swimmer warm, and not every pool keeps the heat at a comfortable level.</small></span></button>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="goggles"><span class="box" aria-hidden="true"></span><span><strong>Extra goggles</strong><small>A spare pair in case a strap breaks or a pair leaks.</small></span></button>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="extras"><span class="box" aria-hidden="true"></span><span><strong>Extras of everything else</strong><small>Backups of the other gear you rely on, just in case.</small></span></button>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="water"><span class="box" aria-hidden="true"></span><span><strong>Water</strong><small>Plenty of it. It is a long day.</small></span></button>
+      <button type="button" class="chk" role="checkbox" aria-checked="false" data-k="snacks"><span class="box" aria-hidden="true"></span><span><strong>Snacks</strong><small>A must. Meets can run many hours, so pack enough to keep your swimmer fueled.</small></span></button>
+      <p class="chkdone" id="chkdone" role="status"></p>
+      <button type="button" class="chkreset" id="chkreset">Clear all checks</button>
+    </div>
+  </section>
+
   <section id="panel-ti" role="tabpanel" aria-labelledby="tab-ti" hidden>
-    <div class="soon">
-      <h2>Timers: coming next</h2>
-      <p class="sub">This tab is waiting for the volunteer timer steps. Tell Claude what timers need to know and it goes here in the same swipe-through format.</p>
+    <div class="plist">
+      <div class="pintro">
+        <h2>Timers: lane job guide</h2>
+        <p>Expect a million questions from swimmers, especially the 10 and under group. You should not start conversations with swimmers, but they will start them with you. Stay calm and friendly, keep your eyes on your lane, and send problems to the coach. You are not an official. Your job is to take time, not to judge strokes or turns.</p>
+      </div>
+      <div class="pitem"><span class="badge role">Order</span><div><h3>Order of timing</h3><p>1. Lane touchpad. 2. The pickle. 3. The timers' stopwatches.</p></div></div>
+      <div class="pitem"><span class="badge role">Start</span><div><h3>Start on the strobe</h3><p>Start your watch at the first flash of the strobe, not the horn, and do not guess early. Check that your watch is running. If it is not, or you started late, raise your hand. Even in an empty lane, start your watch in case it is needed elsewhere.</p></div></div>
+      <div class="pitem"><span class="badge role">Pickle</span><div><h3>Press the pickle button</h3><p>Keep the pickle in its hanging spot until the swimmer is coming in to finish. This prevents an accidental click. Press it when the swimmer touches the wall, and also stop your stopwatch. Speak clearly to the timer who writes.</p></div></div>
+      <div class="pitem"><span class="badge role">Say</span><div><h3>Say the time digit by digit</h3><p>Instead of "fifty-nine thirty-six," say "five, nine, three, six."</p></div></div>
+      <div class="pitem"><span class="badge role">Writer</span><div><h3>Write the time</h3><p>Record your own time first. Then get the second timer's time to write down. Write times to the hundredths, with no rounding. Never copy a time from the scoreboard. Keep track that the right swimmer is swimming in each heat. If there is a no show, write N/S on the paper so there is no mix up.</p></div></div>
+      <div class="pitem"><span class="badge no">Don't</span><div><h3>Crowd the swimmers</h3><p>Stay behind the blocks and away from the swimmers when they start. That gives officials a clear view of the swimmers.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Watch the wall</h3><p>When swimmers are about to finish, make sure you have a clear view of them touching the wall. Stop your watch when any part of the swimmer touches the wall. Know the race distance so you do not stop too early or too late.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Send problems to the coach</h3><p>If a swimmer has an issue, like missing their heat, send them to their coach.</p></div></div>
+      <div class="pitem"><span class="badge role">Back</span><div><h3>Backstroke ledge</h3><p>On backstroke, timers pull in the backstroke ledge. It takes two timers, one on the left and one on the right, so the straps do not tangle.</p></div></div>
+      <div class="pitem"><span class="badge no">Stop</span><div><h3>Stopwatch problem</h3><p>If something happens and your stopwatch has a problem, raise your hand right away and keep it raised. The head timer, an experienced timer who keeps extra backup stopwatches running, will bring you a new one that is already running.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Clear your watch</h3><p>After both times are written, clear your stopwatch so it is ready for the next heat.</p></div></div>
+      <div class="pitem"><span class="badge role">Help</span><div><h3>Swimmer in trouble</h3><p>Do not pull a swimmer out of the water unless they reach for your hand. If a swimmer seems to be struggling, tell the referee or chief judge right away.</p></div></div>
+      <div class="pitem"><span class="badge no">Safe</span><div><h3>Phones, cameras and one-on-one</h3><p>No phones or cameras while you are timing. Never be alone with a swimmer in a locker room or restroom.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Be ready to get wet</h3><p>Come prepared for it.</p></div></div>
+      <p class="psrc">Based on PSSC timer practice, USA Swimming timer instructions and USA Swimming Safe Sport meet guidance. Always follow the meet referee and the officials.</p>
+    </div>
+  </section>
+
+  <section id="panel-pa" role="tabpanel" aria-labelledby="tab-pa" hidden>
+    <div class="plist">
+      <div class="pintro">
+        <h2>Parents: meet day do's and don'ts</h2>
+        <p>This is how most meets run. Each pool and meet host can have its own rules, so follow the posted signs, the meet information and the officials.</p>
+      </div>
+      <div class="pitem cheer"><span class="badge yes">Do</span><div><h3>Be loud and positive!</h3><p>Cheer for every PSSC swimmer, fast or slow, first or last. Clap for effort, personal bests and teammates. We are one team, swimmers, coaches and parents.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Be on time</h3><p>Get your swimmer there on time for warm-up. Check the meet information for warm-up and start times.</p></div></div>
+      <div class="pitem"><span class="badge no">Don't</span><div><h3>Go on the pool deck</h3><p>At most meets, parents and other spectators are not allowed on deck. Deck is for athletes, coaches, officials and credentialed volunteers.</p></div></div>
+      <div class="pitem"><span class="badge no">Don't</span><div><h3>Coach your swimmer</h3><p>Let the coaches coach. Cheer and encourage, and leave stroke and race advice to the team coaches.</p></div></div>
+      <div class="pitem"><span class="badge no">Don't</span><div><h3>Go in the swimmers' locker room</h3><p>Stay out of the swimmers' locker room and changing areas.</p></div></div>
+      <div class="pitem"><span class="badge no">Don't</span><div><h3>Take photos or video behind the blocks</h3><p>Phones and cameras are not allowed behind the starting blocks. Many meets also ban recording in locker rooms, changing areas and restrooms.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Use the non-athlete restrooms</h3><p>Only use the restrooms designated for non-athletes.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Watch from the spectator area</h3><p>Use the balcony or seating area the host sets aside for spectators.</p></div></div>
+      <div class="pitem"><span class="badge yes">Do</span><div><h3>Send questions through the coaches</h3><p>If something comes up, ask your swimmer's coach.</p></div></div>
+      <p class="psrc">Based on USA Swimming Safe Sport meet guidance and Pacific Northwest Swimming meet information. Always follow the host's posted rules.</p>
     </div>
   </section>
 </main>
@@ -209,7 +295,7 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
   var ARROW='<defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#13294B"/></marker></defs>';
   function arrow(d,color){return '<path d="'+d+'" fill="none" stroke="'+(color||"#13294B")+'" stroke-width="3.5" stroke-dasharray="2 7" stroke-linecap="round" marker-end="url(#ah)"/>'}
 
-  var STEPS=[
+  var STEPS_FREE=[
     {title:"Know your event, heat and lane.",
      sub:"Check the heat sheet before you leave the team area. Write all three on your arm or hand if you can.",
      art:function(){return '<span class="tag ex">Example heat sheet</span><div class="sheet"><div class="row head"><span>Heat</span><span>Lane</span><span>Swimmer</span></div><div class="row"><span>2</span><span>4</span><span>Someone else</span></div><div class="row you"><span>3</span><span>4</span><span>You</span></div><div class="row"><span>4</span><span>4</span><span>Someone else</span></div></div><div class="big3"><div><small>Event</small><strong>12</strong></div><div><small>Heat</small><strong>3</strong></div><div><small>Lane</small><strong>4</strong></div></div>'}},
@@ -246,6 +332,37 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
      art:function(){return '<div class="wave" id="qwave" aria-hidden="true"><i class="s"></i><i class="s"></i><i class="s"></i></div>'}}
   ];
 
+
+  var STEPS_BACK=[STEPS_FREE[0],STEPS_FREE[1],STEPS_FREE[2],
+    {title:"Rapid short whistles: get ready.",
+     sub:"You'll hear 4 or more rapid short whistles. Get ready at your lane with your cap and goggles on. Don't get in the water yet.",
+     sound:{key:"short",label:"Hear the rapid short whistles"}, wave:"sssss",
+     art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text>')}},
+    {title:"First long whistle: get in the water.",
+     sub:"Backstroke starts in the water. Get in and take the grips on the wall. Stay quiet.",
+     sound:{key:"long",label:"Hear the first long whistle"}, wave:"l",
+     art:function(){return scene(ARROW+dot(70,110,"",{op:.35})+arrow("M84 110 C120 120 160 120 214 110")+dot(232,110,"YOU")+'<text x="272" y="48" text-anchor="middle" font-size="16" fill="#fff">IN THE WATER</text>')}},
+    {title:"Second long whistle: feet up.",
+     sub:"Put your feet on the wall and hold the grips. Get set and wait for the starter.",
+     sound:{key:"long",label:"Hear the second long whistle"}, wave:"l",
+     art:function(){return scene(dot(232,110,"",{op:.35})+arrow("M222 110 L204 110")+dot(204,110,"YOU")+'<text x="272" y="48" text-anchor="middle" font-size="16" fill="#fff">FEET ON THE WALL</text>')}},
+    {title:"Wait for “Take your mark.”",
+     sub:"Hold the grips and stay still. When the starter says it, pull up into your start position and hold.",
+     sound:{key:"mark",label:"Hear “Take your mark”"}, wave:"sl",
+     art:STEPS_FREE[5].art},
+    {title:"Bright light and horn: GO!",
+     sub:"When you see the light and hear the horn, push off.",
+     sound:{key:"buzzer",label:"Hear the start buzzer"}, wave:"l",
+     art:STEPS_FREE[6].art},
+    {title:"Finish: stay by the lane line.",
+     sub:"When you finish, move to the side by the lane line and stay clear of the wall and the touchpad. Your coach and the officials will tell you when to get out.",
+     art:function(){return scene(dot(214,134,"YOU")+'<text x="290" y="112" text-anchor="middle" font-size="14" fill="#fff">STAY BY THE</text><text x="290" y="130" text-anchor="middle" font-size="14" fill="#fff">LANE LINE</text><text x="290" y="30" text-anchor="middle" font-size="15" fill="#fff">STAY IN THE WATER</text>')}},
+    {title:"Put it in order.",
+     sub:"The backstroke start, in order:",
+     recap:["Rapid short whistles: get ready","First long whistle: get in the water","Second long whistle: feet up","“Take your mark”","Light and horn: go!"],
+     art:function(){return '<div class="wave" aria-hidden="true"><i class="s"></i><i class="s"></i><i class="l"></i></div>'}}
+  ];
+  var STEPS=STEPS_FREE;
   var QUIZ=[
     {key:"short",ans:"beside",txt:"a burst of short whistles"},
     {key:"long",ans:"onblock",txt:"a long whistle"}
@@ -256,10 +373,20 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
   var stage=document.getElementById("stage"), count=document.getElementById("count"), dots=document.getElementById("dots");
   var prev=document.getElementById("prev"), next=document.getElementById("next");
 
-  STEPS.forEach(function(s,i){
-    var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Step "+(i+1));
-    b.addEventListener("click",function(){go(i)});dots.appendChild(b);
-  });
+  function buildDots(){
+    dots.innerHTML="";
+    STEPS.forEach(function(s,i){
+      var b=document.createElement("button");b.type="button";b.setAttribute("aria-label","Step "+(i+1));
+      b.addEventListener("click",function(){go(i)});dots.appendChild(b);
+    });
+  }
+  buildDots();
+  var strokeBtns=document.querySelectorAll("#stroke button");
+  strokeBtns.forEach(function(b){b.addEventListener("click",function(){
+    STEPS=b.getAttribute("data-stroke")==="back"?STEPS_BACK:STEPS_FREE;
+    strokeBtns.forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false")});
+    idx=0;seen={};buildDots();render();
+  })});
 
   function waveHTML(p){
     var h='<div class="wave" id="wave" aria-hidden="true">';
@@ -295,6 +422,7 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
       if(s.placeholder)h+='<p class="ph">Placeholder beep. The real start sound goes here.</p>';
     }
     if(s.quiz){h+='<div id="quizbox"></div>'}
+    if(s.recap){h+='<ol class="recap">';s.recap.forEach(function(r){h+='<li>'+r+'</li>'});h+='</ol>'}
     h+='</div></article>';
     stage.innerHTML=h;
     if(s.sound){
@@ -356,14 +484,28 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5){go(dx<0?idx+1:idx-1)}
   },{passive:true});
 
-  var tsw=document.getElementById("tab-sw"), tti=document.getElementById("tab-ti");
+    (function(){
+    var KEY="pssc-bring-v1",st={},rows=document.querySelectorAll(".chk"),msg=document.getElementById("chkdone");
+    try{st=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){st={}}
+    function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+    function paint(){
+      var n=0;rows.forEach(function(r){var on=!!st[r.getAttribute("data-k")];r.setAttribute("aria-checked",on?"true":"false");if(on)n++});
+      msg.textContent=n===rows.length?"All packed! Have a great meet.":(n+" of "+rows.length+" packed");
+    }
+    rows.forEach(function(r){r.addEventListener("click",function(){var k=r.getAttribute("data-k");st[k]=!st[k];save();paint()})});
+    document.getElementById("chkreset").addEventListener("click",function(){st={};save();paint()});
+    paint();
+  })();
+  var TABS=[["sw","tab-sw","panel-sw"],["pk","tab-pk","panel-pk"],["ti","tab-ti","panel-ti"],["pa","tab-pa","panel-pa"]];
   function tab(which){
-    var sw=which==="sw";
-    tsw.setAttribute("aria-selected",sw);tti.setAttribute("aria-selected",!sw);
-    document.getElementById("panel-sw").hidden=!sw;document.getElementById("panel-ti").hidden=sw;
+    TABS.forEach(function(t){
+      var on=t[0]===which;
+      document.getElementById(t[1]).setAttribute("aria-selected",on);
+      document.getElementById(t[2]).hidden=!on;
+    });
     stopAll();
   }
-  tsw.addEventListener("click",function(){tab("sw")});tti.addEventListener("click",function(){tab("ti")});
+  TABS.forEach(function(t){document.getElementById(t[1]).addEventListener("click",function(){tab(t[0])})});
 
   render();
 })();
