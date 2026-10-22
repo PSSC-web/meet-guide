@@ -143,6 +143,19 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .chk:focus-visible,.chkreset:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 .chkdone{margin:0;text-align:center;color:#fff;font-weight:700;min-height:1.2em}
 .chkreset{align-self:center;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.35);border-radius:10px;padding:12px 18px;font:700 16px var(--body,inherit);cursor:pointer;min-height:48px}
+.armbox{background:var(--card);color:var(--ink);border-radius:16px;padding:16px 18px;box-shadow:0 8px 24px rgba(0,0,0,.28);border-left:8px solid var(--green)}
+.armbox h3{font-family:var(--display);font-weight:800;font-size:clamp(26px,7.4vw,32px);line-height:1.05;margin:0 0 6px;color:var(--navy)}
+.armbox p{margin:0 0 10px;font-size:16px}
+.armgrid{display:flex;flex-direction:column;gap:8px}
+.armh,.armr{display:flex;gap:8px}
+.armh span{flex:1;text-align:center;font:700 14px/1 var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--navy)}
+.armr input{flex:1;min-width:0;width:100%;height:52px;border:3px solid var(--navy);border-radius:10px;text-align:center;font:800 26px var(--display);color:var(--ink);background:#fff}
+.armr input:focus{outline:3px solid var(--green);outline-offset:1px}
+.armadd{margin:10px 0 4px;min-height:48px;padding:0 16px;border-radius:10px;border:2px solid var(--navy);background:#fff;color:var(--navy);font-weight:700;font-size:16px;font-family:inherit;cursor:pointer}
+.armart svg{display:block;width:100%;height:auto;margin-top:6px}
+.armkey{font-size:15px!important;margin:8px 0 0!important}
+.armr select{flex:1;min-width:0;width:100%;height:52px;border:3px solid var(--navy);border-radius:10px;text-align:center;text-align-last:center;font:800 26px var(--display);color:var(--ink);background:#fff}
+.armnote{font-size:14px!important;margin:8px 0 0!important}
 </style>
 </head>
 <body>
@@ -228,6 +241,17 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
         <h2>Parents: meet day do's and don'ts</h2>
         <p>This is how most meets run. Each pool and meet host can have its own rules, so follow the posted signs, the meet information and the officials.</p>
       </div>
+      <div class="armbox" id="armbox">
+        <h3>Mark your swimmer's arm</h3>
+        <p>Swimmers write their event, stroke, heat and lane on their arm so they always know where to be. Our head coach is great about doing this for the youngest swimmers. If you fill this out first, it saves the coach time. Get the numbers from the heat sheet, then copy them onto your swimmer's arm.</p>
+        <div class="armgrid" id="armrows" role="group" aria-label="Events for the arm">
+          <div class="armh"><span>Event</span><span>Stroke</span><span>Heat</span><span>Lane</span></div>
+        </div>
+        <button type="button" class="armadd" id="armadd">+ Add another event</button>
+        <div class="armart" id="armart" aria-live="polite"></div>
+        <p class="armkey"><b>FY</b> Freestyle &nbsp; <b>BK</b> Backstroke &nbsp; <b>FL</b> Butterfly &nbsp; <b>BR</b> Breaststroke</p>
+        <p class="armnote">Use first names only. Heat and lane can change, so check the heat sheet again before the race.</p>
+      </div>
       <div class="pitem cheer"><span class="badge yes">Do</span><div><h3>Be loud and positive!</h3><p>Cheer for every PSSC swimmer, fast or slow, first or last. Clap for effort, personal bests and teammates. We are one team, swimmers, coaches and parents.</p></div></div>
       <div class="pitem"><span class="badge yes">Do</span><div><h3>Be on time</h3><p>Get your swimmer there on time for warm-up. Check the meet information for warm-up and start times.</p></div></div>
       <div class="pitem"><span class="badge no">Don't</span><div><h3>Go on the pool deck</h3><p>At most meets, parents and other spectators are not allowed on deck. Deck is for athletes, coaches, officials and credentialed volunteers.</p></div></div>
@@ -297,25 +321,25 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
   var STEPS_FREE=[
     {title:"Know your event, heat and lane.",
-     sub:"Check the heat sheet before you leave the team area. Write all three on your arm or hand if you can.",
+     sub:"Check the heat sheet before you leave the team area. Write them on your arm if you can, with your stroke too. Parents can fill out an arm template on the Parents tab first.",
      art:function(){return '<span class="tag ex">Example heat sheet</span><div class="sheet"><div class="row head"><span>Heat</span><span>Lane</span><span>Swimmer</span></div><div class="row"><span>2</span><span>4</span><span>Someone else</span></div><div class="row you"><span>3</span><span>4</span><span>You</span></div><div class="row"><span>4</span><span>4</span><span>Someone else</span></div></div><div class="big3"><div><small>Event</small><strong>12</strong></div><div><small>Heat</small><strong>3</strong></div><div><small>Lane</small><strong>4</strong></div></div>'}},
     {title:"Get to your lane and be ready.",
      sub:"Line up behind your lane, behind the block, with your cap and goggles on.",
      art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="70" y="146" text-anchor="middle" font-size="14" fill="#13294B">BEHIND YOUR LANE</text>')}},
     {title:"Confirm it's your heat.",
-     sub:"Some swimmers don't show up. That heat still swims with their lane empty, so don't go just because the swimmer in front of you went. Check the heat number, and ask the timer if you're not sure.",
-     note:"If you do swim in the wrong heat, tell your coach right away.",
+     sub:"Some swimmers don't show up. Their lane stays empty. Don't go just because the swimmer before you went. Check your heat number. Not sure? Ask the timer.",
+     note:"Swam in the wrong heat? Tell your coach right away.",
      art:function(){return '<div class="chat"><div class="left"><div class="who">Swimmer</div><div class="bub">I\'m heat 3. Is this heat 3?</div></div><div class="right"><div class="who">Timer</div><div class="bub">This is heat 2. You\'re next!</div></div></div>'}},
     {title:"Lots of short whistles: get ready.",
-     sub:"You'll hear a burst of at least 4 short, quick blasts. Get ready at your block: take off everything except your swimwear, cap and goggles. Stay behind the block. Don't step up yet.",
+     sub:"You'll hear 4 or more quick, short whistles. That means get ready. Take off your warm-ups. Keep your suit, cap and goggles on. Stay behind the block. Don't step up yet.",
      sound:{key:"short",label:"Hear the short whistles"}, wave:"sssss",
-     art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text><text x="70" y="146" text-anchor="middle" font-size="14" fill="#13294B">BEHIND THE BLOCK</text>')}},
+     art:function(){return scene(ARROW+dot(126,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text><text x="90" y="156" text-anchor="middle" font-size="14" fill="#13294B">BEHIND THE BLOCK</text>')}},
     {title:"Long whistle: get on the block.",
-     sub:"Step up on your block and get ready. Stay still and quiet.",
+     sub:"Step up on your block. Stay still and quiet.",
      sound:{key:"long",label:"Hear the long whistle"}, wave:"l",
-     art:function(){return scene(ARROW+dot(170,70,"",{op:.35})+arrow("M170 84 L170 100")+dot(170,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">ON THE BLOCK</text>')}},
-    {title:"Stand or relax until you hear “Take your mark.”",
-     sub:"Hold your stand or relax position. Wait for the starter's words.",
+     art:function(){return scene(ARROW+dot(126,110,"",{op:.35})+arrow("M140 110 L154 110")+dot(170,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">ON THE BLOCK</text>')}},
+    {title:"Wait for “Take your mark.”",
+     sub:"Stay on the block. Be still. Listen for the starter.",
      sound:{key:"mark",label:"Hear “Take your mark”"}, wave:"sl",
      art:function(){return scene(dot(170,110,"YOU")+'<text x="278" y="34" text-anchor="middle" font-size="13" fill="#fff" letter-spacing="2">STARTER</text><rect x="204" y="40" width="148" height="52" rx="14" fill="#fff" stroke="#13294B" stroke-width="2.5"/><path d="M212 92 L200 108 L228 92z" fill="#fff" stroke="#13294B" stroke-width="2.5" stroke-linejoin="round"/><rect x="212" y="88" width="30" height="6" fill="#fff"/><text x="278" y="62" text-anchor="middle" font-size="17" fill="#13294B">Take your</text><text x="278" y="82" text-anchor="middle" font-size="17" fill="#13294B">mark…</text>')}},
     {title:"Bright light and horn: GO!",
@@ -323,7 +347,7 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
      sound:{key:"buzzer",label:"Hear the start buzzer"}, wave:"l",
      art:function(){return scene(ARROW+dot(170,110,"YOU")+'<g class="flash"><circle cx="262" cy="46" r="20" fill="#FFF4B0" stroke="#13294B" stroke-width="3"/><g stroke="#FFF4B0" stroke-width="4" stroke-linecap="round"><path d="M262 12v-6M262 86v-6M226 46h-6M304 46h-6M237 21l-4-4M291 71l4 4M287 21l4-4M233 75l-4 4"/></g></g><text x="262" y="92" text-anchor="middle" font-size="13" fill="#fff" letter-spacing="2">LIGHT + HORN</text>'+arrow("M184 104 C230 90 270 100 320 122")+'<text x="300" y="196" text-anchor="middle" font-size="42" fill="#fff" stroke="#13294B" stroke-width="5" paint-order="stroke">GO!</text>')}},
     {title:"Fly-over finish: stay in the water.",
-     sub:"When you finish, stay in the water. Stay clear of the block, to the side by the lane line. Exit when the next swimmer jumps off the block.",
+     sub:"When you finish, stay in the water. Move to the side, by the lane line, away from the block. Get out when the next swimmer jumps in.",
      fly:true,
      art:function(){return '<div id="fly"></div>'}},
     {title:"Test yourself.",
@@ -335,19 +359,19 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
   var STEPS_BACK=[STEPS_FREE[0],STEPS_FREE[1],STEPS_FREE[2],
     {title:"Rapid short whistles: get ready.",
-     sub:"You'll hear 4 or more rapid short whistles. Get ready at your lane: take off everything except your swimwear, cap and goggles. Don't get in the water yet.",
+     sub:"You'll hear 4 or more rapid short whistles. That means get ready. Take off your warm-ups. Keep your suit, cap and goggles on. Stay at your lane. Don't get in the water yet.",
      sound:{key:"short",label:"Hear the rapid short whistles"}, wave:"sssss",
-     art:function(){return scene(ARROW+dot(70,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text>')}},
+     art:function(){return scene(ARROW+dot(126,110,"YOU")+'<text x="262" y="48" text-anchor="middle" font-size="16" fill="#fff">GET READY</text><text x="90" y="156" text-anchor="middle" font-size="14" fill="#13294B">AT YOUR LANE</text>')}},
     {title:"First long whistle: get in the water.",
-     sub:"Backstroke starts in the water. Get in and take the grips on the wall. Stay quiet.",
+     sub:"Backstroke starts in the water. Get in and hold the grips on the wall. Stay quiet.",
      sound:{key:"long",label:"Hear the first long whistle"}, wave:"l",
-     art:function(){return scene(ARROW+dot(70,110,"",{op:.35})+arrow("M84 110 C120 120 160 120 214 110")+dot(232,110,"YOU")+'<text x="272" y="48" text-anchor="middle" font-size="16" fill="#fff">IN THE WATER</text>')}},
+     art:function(){return scene(ARROW+dot(126,110,"",{op:.35})+arrow("M140 110 C165 124 190 124 216 112")+dot(232,110,"YOU")+'<text x="272" y="48" text-anchor="middle" font-size="16" fill="#fff">IN THE WATER</text>')}},
     {title:"Second long whistle: feet up.",
-     sub:"Put your feet on the wall and hold the grips. Get set and wait for the starter.",
+     sub:"Put your feet on the wall. Keep holding the grips. Wait for the starter.",
      sound:{key:"long",label:"Hear the second long whistle"}, wave:"l",
      art:function(){return scene(dot(232,110,"",{op:.35})+arrow("M222 110 L204 110")+dot(204,110,"YOU")+'<text x="272" y="48" text-anchor="middle" font-size="16" fill="#fff">FEET ON THE WALL</text>')}},
     {title:"Wait for “Take your mark.”",
-     sub:"Hold the grips and stay still. When the starter says it, pull up into your start position and hold.",
+     sub:"Hold the grips. Stay still. When the starter says it, pull up into your start position and hold.",
      sound:{key:"mark",label:"Hear “Take your mark”"}, wave:"sl",
      art:STEPS_FREE[5].art},
     {title:"Bright light and horn: GO!",
@@ -355,7 +379,8 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
      sound:{key:"buzzer",label:"Hear the start buzzer"}, wave:"l",
      art:STEPS_FREE[6].art},
     {title:"Finish: stay by the lane line.",
-     sub:"When you finish, move to the side by the lane line and stay clear of the wall and the touchpad. Your coach and the officials will tell you when to get out.",
+     sub:"When you finish, stay in the water. Move to the side, by the lane line, away from the wall. Listen for the long whistle. That means get out. It is the same first long whistle that tells the next heat to get in.",
+     sound:{key:"long",label:"Hear the long whistle"}, wave:"l",
      art:function(){return scene(dot(214,134,"YOU")+'<text x="290" y="112" text-anchor="middle" font-size="14" fill="#fff">STAY BY THE</text><text x="290" y="130" text-anchor="middle" font-size="14" fill="#fff">LANE LINE</text><text x="290" y="30" text-anchor="middle" font-size="15" fill="#fff">STAY IN THE WATER</text>')}},
     {title:"Put it in order.",
      sub:"The backstroke start, in order:",
@@ -495,6 +520,49 @@ svg text{font-family:var(--display);font-weight:700;letter-spacing:.06em}
     rows.forEach(function(r){r.addEventListener("click",function(){var k=r.getAttribute("data-k");st[k]=!st[k];save();paint()})});
     document.getElementById("chkreset").addEventListener("click",function(){st={};save();paint()});
     paint();
+  })();
+    (function(){
+    var rowsEl=document.getElementById("armrows"),art=document.getElementById("armart"),add=document.getElementById("armadd");
+    var MAX=4,n=0,X=[132,188,244,300];
+    function row(){
+      var r=document.createElement("div");r.className="armr";
+      ["Event","Stroke","Heat","Lane"].forEach(function(l){
+        var i;
+        if(l==="Stroke"){
+          i=document.createElement("select");
+          ["","FY","BK","FL","BR"].forEach(function(o){var op=document.createElement("option");op.value=o;op.textContent=o||"-";i.appendChild(op)});
+          i.addEventListener("change",draw);
+        }else{
+          i=document.createElement("input");i.type="text";i.inputMode="numeric";i.maxLength=3;
+          i.addEventListener("input",function(){i.value=i.value.replace(/[^0-9a-zA-Z]/g,"");draw()});
+        }
+        i.setAttribute("aria-label",l+" "+(n+1));r.appendChild(i);
+      });
+      rowsEl.appendChild(r);n++;
+      if(n>=MAX)add.hidden=true;
+    }
+    function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+    function draw(){
+      var rows=rowsEl.querySelectorAll(".armr"),vals=[];
+      rows.forEach(function(r){var v=[].map.call(r.querySelectorAll("input,select"),function(i){return i.value});if(v.join("")!=="")vals.push(v)});
+      var ex=!vals.length; if(ex)vals=[["12","FY","3","4"]];
+      var h='<svg viewBox="0 0 360 210" role="img" aria-label="Forearm with guide lines showing event, stroke, heat and lane as written">'+
+        '<rect x="6" y="68" width="60" height="80" rx="28" fill="#F0D2BC" stroke="#13294B" stroke-width="3"/>'+
+        '<rect x="52" y="22" width="304" height="172" rx="22" fill="#F6DCC8" stroke="#13294B" stroke-width="3"/>'+
+        '<g stroke="#13294B" stroke-width="1.5" stroke-dasharray="5 5" opacity=".45">';
+      [160,216,272].forEach(function(x){h+='<line x1="'+x+'" y1="40" x2="'+x+'" y2="184"/>'});
+      for(var k=0;k<4;k++){h+='<line x1="70" y1="'+(98+k*32)+'" x2="344" y2="'+(98+k*32)+'"/>'}
+      h+='</g><g font-family="Barlow Condensed,Arial Narrow,Arial,sans-serif" font-weight="800" fill="#13294B" text-anchor="middle">';
+      ["EVENT","STROKE","HEAT","LANE"].forEach(function(l,j){h+='<text x="'+X[j]+'" y="58" font-size="12" letter-spacing="1.5" opacity=".7">'+l+'</text>'});
+      vals.forEach(function(v,i){
+        var y=92+i*32;
+        X.forEach(function(x,j){h+='<text x="'+x+'" y="'+y+'" font-size="28" '+(ex?'opacity=".35"':'')+'>'+esc(v[j]||"")+'</text>'});
+      });
+      h+='</g>'+(ex?'<text x="204" y="207" text-anchor="middle" font-size="12" fill="#fff" font-family="Arial,sans-serif">Example. Fill in yours above.</text>':'')+'</svg>';
+      art.innerHTML=h;
+    }
+    add.addEventListener("click",function(){row();draw()});
+    row();draw();
   })();
   var TABS=[["sw","tab-sw","panel-sw"],["pk","tab-pk","panel-pk"],["ti","tab-ti","panel-ti"],["pa","tab-pa","panel-pa"]];
   function tab(which){
